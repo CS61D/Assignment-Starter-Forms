@@ -1,0 +1,45 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+form {
+  margin-bottom: 1.5em;
+}
+
+div {
+  margin-bottom: 1.5em;
+}
+
+/* Label styling */
+label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+input {
+  padding: 0.5em;
+}
+
+input[type="text"] {
+  width: 350px;
+}
+
+input[type="password"] {
+  width: 350px;
+}
+
+
+select {
+  width: 160px;
+  padding: 0.5em;
+}
+
+/* Error message styling */
+.error-message {
+  color: rgb(250, 85, 85);
+  margin-top: 0.5em;
+}
+
