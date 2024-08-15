@@ -1,106 +1,103 @@
-import { useForm, SubmitHandler } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import "../styles.css";
+// TODO: any imports you may need
 
-const requiredMsg = "Required";
-const passwordLenMsg = "Password must be between 8-20 characters";
-const passwordLowerMsg = "Password must contain at least one lowercase letter";
-const passwordUpperrMsg = "Password must contain at least one uppercase letter";
-const passwordNumMsg = "Password must contain at least one digit";
+const schema = z.object({
+  /** 
+   * TODO Part 1: Define the shape of the form data.
+   * List out form fields:
+   * - Email                    (string)
+   * - First name               (string)
+   * - Last name                (string)
+   * - Role                     (string)
+   * - Date of birth            (string)
+   * - Password creation        (string)
+   * - Password confirmation    (string)
+   * - Subscription opt-in/out  (boolean)
+   */
+});
+/** 
+ * TODO Part 2: Add validation using Zod methods:
+ * - Required fields (i.e. cannot be empty): 
+ *      - Email
+ *      - First name
+ *      - Last name
+ *      - Create password
+ *      - Confirm password
+ * - Optional fields (i.e. user can leave them blank):
+ *      - Role
+ *      - Date of birth
+ *      - Subscription opt-in/out, in that the user can leave
+ *        the checkbox unchecked. You can choose whether or not to
+ *        call Zod's .optional() method on this field.
+ * - Email format: Please use Zod's built-in .email() validation method.
+ * - Date of birth: Date cannot be in the future.
+ * - Create password: The user's password must: 
+ *      - Be between 8-20 characters
+ *      - Contain at least one lowercase letter
+ *      - Contain at least one uppercase letter
+ *      - Contain at lease one digit
+ * - Confirm password: The user must enter the same password in the 
+ *   confirmation field as in the creation field.
+ */
 
-const schema = z
-  .object({
-    email: z.string().min(1, requiredMsg).email(),
-    firstName: z.string().min(1, requiredMsg),
-    lastName: z.string().min(1, requiredMsg),
-    birthDate: z.string().refine((date) => {
-      const today = new Date().toISOString().slice(0, 10);
-      return date <= today;
-    }, "Date cannot be in the future"),
-    role: z.string().optional(),
-    password: z
-      .string()
-      .min(1, requiredMsg)
-      .min(8, passwordLenMsg)
-      .max(20, passwordLenMsg)
-      .regex(/[a-z]/, passwordLowerMsg)
-      .regex(/[A-Z]/, passwordUpperrMsg)
-      .regex(/[\d]/, passwordNumMsg),
-    confirmPassword: z.string().min(1, requiredMsg),
-    subscribe: z.boolean(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-type Inputs = z.infer<typeof schema>;
+// TODO Part 1: Infer off the schema to create your custom type.
+type Inputs = null; // replace the null
 
 export default function Form() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    resolver: zodResolver(schema),
-  });
+  /**
+   * TODO Part 1: Grab any needed return props from useForm. 
+   * Pass your custom type into useForm.
+   * Pass zodResolver into useForm.
+   */
 
+  // Please do *not* change this onSubmit function.
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      {/* 
+       * TODO Part 1: Fill out the contents of the form. 
+       * Don't forget about the existence of the label element!
+       */}
+      {/* TODO Part 2: Display error messages below each field. */}
       <div>
-        <label>Email Address *</label>
-        <input
-          {...register("email")}
-          id="email"
-          type="text"
-          placeholder="example@email.com"
-        />
-        {errors.email && (
-          <p className="error-message">{errors.email.message}</p>
-        )}
+        {/*
+         * TODO: Email
+         * Input Type: <input type="email">
+         * Notes: Please have a placeholder example email.
+         */}
       </div>
       <div>
-        <label>First Name *</label>
-        <input {...register("firstName")} id="firstName" type="text" />
-        {errors.firstName && (
-          <p className="error-message">{errors.firstName.message}</p>
-        )}
+        {/*
+         * TODO: First Name
+         * Input Type: <input type="text">
+         */}
       </div>
       <div>
-        <label>Last Name *</label>
-        <input {...register("lastName")} id="lastName" type="text" />
-        {errors.lastName && (
-          <p className="error-message">{errors.lastName.message}</p>
-        )}
+        {/*
+         * TODO: Last Name
+         * Input Type: <input type="text">
+         */ }
       </div>
       <div>
-        <label>Role</label>
-        <select {...register("role")}>
-          <option value="">Select One</option>
-          <option value="student">Student</option>
-          <option value="educator">Educator</option>
-          <option value="parent/guardian">Parent or Guardian</option>
-        </select>
-        {errors.role && <p className="error-message">{errors.role.message}</p>}
+        {/*
+         * TODO: Role
+         * Input Type: <select>
+         */}
       </div>
       <div>
-        <label>Date of Birth</label>
-        <input {...register("birthDate")} id="birthDate" type="date" />
-        {errors.birthDate && (
-          <p className="error-message">{errors.birthDate.message}</p>
-        )}
+        {/*
+         * TODO: Date of Birth
+         * Input Type: <input type="date">
+         */}
       </div>
       <div>
-        <label>Create Password *</label>
-        <input {...register("password")} id="password" type="password" />
-        {errors.password && (
-          <p className="error-message">{errors.password.message}</p>
-        )}
+        {/*
+         * TODO: Create Password
+         * Input Type: <input type="password">
+         */}
         <div>
           <p>Password must:</p>
           <li>Be between 8-20 characters</li>
@@ -110,21 +107,19 @@ export default function Form() {
         </div>
       </div>
       <div>
-        <label>Confirm Password *</label>
-        <input
-          {...register("confirmPassword")}
-          id="confirmPassword"
-          type="password"
-        />
-        {errors.confirmPassword && (
-          <p className="error-message">{errors.confirmPassword.message}</p>
-        )}
+        {/*
+         * TODO: Confirm Password
+         * Input Type: <input type="password">
+         */}
       </div>
       <div>
-        Subscribe to our email newsletter:
-        <input {...register("subscribe")} id="subscribe" type="checkbox" />
+        {/*
+         * TODO: Subscription Opt-in
+         * Input Type: <input type="checkbox">
+         */}
       </div>
-      <button type="submit">Submit</button>
+      
+      {/* TODO: Submit Button */}
     </form>
   );
 }
