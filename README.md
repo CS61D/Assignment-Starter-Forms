@@ -1,7 +1,5 @@
 # Assignment-Solutions-Forms
 
-Deployed at [https://forms.education.codifyberkeley.org/](https://forms.education.codifyberkeley.org/)
-
 ## Setup
 
 install dependencies
